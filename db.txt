@@ -1,0 +1,28 @@
+Table users as u {
+  id serial [pk, increment]
+  created_at timestamp
+  username varchar(15)
+  updated_at timestamp
+}
+
+
+Table comments as c {
+  comment_id int  [pk, increment]
+  comment varchar(240)
+  post_id int
+  user_id int 
+  created_at timestamp
+}
+
+Table posts as p {
+  post_id int [pk, increment]
+  post varchar
+  url varchar(200)
+  user_id int 
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: u.id < c.user_id
+Ref: c.post_id > p.post_id
+Ref: u.id < p.user_id
