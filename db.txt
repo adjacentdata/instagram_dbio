@@ -26,6 +26,7 @@ Table likes as l {
   id serial [pk, increment]
   user_id int
   post_id int 
+  comment_id int
 }
 
 Ref: u.id < c.user_id
@@ -33,3 +34,4 @@ Ref: c.post_id > p.post_id
 Ref: u.id < p.user_id
 Ref: u.id < l.user_id
 Ref: p.post_id - l.post_id
+Ref: l.comment_id > c.comment_id
