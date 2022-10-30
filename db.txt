@@ -1,3 +1,5 @@
+Copy and Paste the code below into https://dbdiagram.io/home
+
 Table users as u {
   id serial [pk, increment]
   created_at timestamp
