@@ -1,4 +1,5 @@
 Copy and Paste the code below into https://dbdiagram.io/home
+Following SQL and PostgreSQL: Developer Guide
 
 Table users as u {
   id serial [pk, increment]
@@ -16,12 +17,14 @@ Table comments as c {
 }
 
 Table posts as p {
-  post_id serial [pk, increment]
+  id serial [pk, increment]
   post varchar
   url varchar(200)
   user_id int 
   created_at timestamp
   updated_at timestamp
+  lat REAL 
+  lng REAL 
 }
 
 Table likes as l {
@@ -31,10 +34,27 @@ Table likes as l {
   comment_id int
 }
 
+Table photo_tags as pt {
+  id serial [pk, increment]
+  created_at timestamp
+  updated_at timestamp 
+  user_id int [ref: > u.id ]
+  post_id int [ref: > p.id]
+  x_pos int 
+  y_pos int 
+}
+
+Table caption_tag as ct {
+  id serial [pk,increment]
+  created_at timestamp
+  post_id int [ref: > p.id]
+  user_id int [ref: > u.id]
+}
+
 Ref: u.id < c.user_id
-Ref: c.post_id > p.post_id
+Ref: c.post_id > p.id
 Ref: u.id < p.user_id
 Ref: u.id < l.user_id
-Ref: p.post_id - l.post_id
+Ref: p.id - l.post_id
 Ref: l.comment_id > c.comment_id
 
