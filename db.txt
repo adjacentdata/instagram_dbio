@@ -31,48 +31,6 @@ Table likes as l {
   comment_id int
 }
 
-Table users as u {
-  id serial [pk, increment]
-  created_at timestamp
-  username varchar(15)
-  updated_at timestamp
-}
-
-Table comments as c {
-  comment_id serial  [pk, increment]
-  comment varchar(240)
-  post_id int
-  user_id int 
-  created_at timestamp
-}
-
-Table posts as p {
-  post_id serial [pk, increment]
-  post varchar
-  url varchar(200)
-  user_id int
-  caption varchar(240)
-  longitude real
-  latitute real
-  created_at timestamp
-  updated_at timestamp
-}
-
-Table likes as l {
-  id serial [pk, increment]
-  user_id int
-  post_id int 
-  comment_id int
-}
-
-Table tags as t {
-  id int 
-  user_id int [ref: > u.id]
-  post_id int [ref: > p.post_id]
-  x int 
-  y int 
-}
-
 Ref: u.id < c.user_id
 Ref: c.post_id > p.post_id
 Ref: u.id < p.user_id
@@ -80,9 +38,3 @@ Ref: u.id < l.user_id
 Ref: p.post_id - l.post_id
 Ref: l.comment_id > c.comment_id
 
-Ref: u.id < c.user_id
-Ref: c.post_id > p.post_id
-Ref: u.id < p.user_id
-Ref: u.id < l.user_id
-Ref: p.post_id - l.post_id
-Ref: l.comment_id > c.comment_id
