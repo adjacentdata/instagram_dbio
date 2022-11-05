@@ -58,3 +58,5 @@ Ref: u.id < l.user_id
 Ref: p.id - l.post_id
 Ref: l.comment_id > c.comment_id
 
+This list is mainly for demonstrating Data Modeling 
+
