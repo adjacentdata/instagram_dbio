@@ -1,62 +1,97 @@
-Copy and Paste the code below into https://dbdiagram.io/home
-Following SQL and PostgreSQL: Developer Guide
-
-Table users as u {
-  id serial [pk, increment]
-  created_at timestamp
-  username varchar(15)
-  updated_at timestamp
+table teams as t {
+  TEAM_ID int [pk]
+  MIN_YEAR date
+  MAX_YEAR date
+  ABBREVIATION varchar
+  NICKNAME varchar
+  YEARFOUNDED date
+  CITY varchar
+  ARENA varchar
+  ARENACAPACITY int
+  OWNER varchar
+  GENERALMANAGER varchar
+  HEADCOACH varchar
+  DLEAGUEAFFILIATION varchar
 }
 
-Table comments as c {
-  comment_id serial  [pk, increment]
-  comment varchar(240)
-  post_id int
-  user_id int 
-  created_at timestamp
+table rankings as rt {
+  TEAM_ID int [ref: - t.TEAM_ID]
+  SEASON_ID int [pk]
+  STANDINGSDATE date
+  CONFERENCE varchar
+  TEAM varchar
+  G int
+  W int
+  L int
+  W_PCT float8
+  HOME_RECORD varchar
+  ROAD_RECORD varchar
+  RETURNTOPLAY int
 }
 
-Table posts as p {
-  id serial [pk, increment]
-  post varchar
-  url varchar(200)
-  user_id int 
-  created_at timestamp
-  updated_at timestamp
-  lat REAL 
-  lng REAL 
+table players as p {
+  PLAYER_NAME varchar
+  TEAM_ID int [ref: - t.TEAM_ID]
+  PLAYER_ID int [pk]
+  SEASON date
 }
 
-Table likes as l {
-  id serial [pk, increment]
-  user_id int
-  post_id int 
-  comment_id int
+table games as g {
+  GAME_DATE_EST date
+  GAME_ID int [pk]
+  GAME_STATUS_TEXT varchar(10)
+  HOME_TEAM_ID int
+  VISITOR_TEAM_ID int
+  SEASON date
+  TEAM_ID_home int
+  PTS_home int
+  FG_PCT_home float
+  FT_PCT_home float
+  FG3_PCT_home float
+  AST_home int
+  REB_home int
+  TEAM_ID_away int
+  PTS_away int
+  FG_PCT_away float
+  FT_PCT_away float
+  FG3_PCT_away float
+  AST_away int
+  REB_away int
+  HOME_TEAM_WINS int
 }
 
-Table photo_tags as pt {
-  id serial [pk, increment]
-  created_at timestamp
-  updated_at timestamp 
-  user_id int [ref: > u.id ]
-  post_id int [ref: > p.id]
-  x_pos int 
-  y_pos int 
+table game_detail as d {
+  GAME_ID int
+  TEAM_ID int [ref: > t.TEAM_ID]
+  TEAM_ABBREVIATION varchar(5)
+  TEAM_CITY varchar(20)
+  PLAYER_ID int [ref: > p.PLAYER_ID]
+  PLAYER_NAME varchar(50)
+  NICKNAME varchar(50)
+  START_POSITION char
+  COMMENT varchar(50)
+  MIN varchar(5)
+  FGM float
+  FGA float
+  FG_PCT float
+  FG3M float
+  FG3A float
+  FG3_PCT float
+  FTM float
+  FTA float
+  FT_PCT float
+  OREB float
+  DREB float
+  REB float
+  AST float
+  STL float
+  BLK float
+  TO float
+  PF float
+  PTS float
+  PLUS_MINUS float
 }
 
-Table caption_tag as ct {
-  id serial [pk,increment]
-  created_at timestamp
-  post_id int [ref: > p.id]
-  user_id int [ref: > u.id]
-}
-
-Ref: u.id < c.user_id
-Ref: c.post_id > p.id
-Ref: u.id < p.user_id
-Ref: u.id < l.user_id
-Ref: p.id - l.post_id
-Ref: l.comment_id > c.comment_id
-
-This list is mainly for demonstrating Data Modeling 
-
+// Creating references
+// You can also define relaionship separately
+// > many-to-one; < one-to-many; - one-to-one; <> many-to-many
